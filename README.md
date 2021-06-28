@@ -1,4 +1,4 @@
-### RoR / Vue.js Workshop
+# RoR / Vue.js Workshop
 ## Introduction to Vue.js using Ruby on Rails for the back
 The target is to build a simple feedback application using 
  - RoR as an API back end
@@ -121,3 +121,167 @@ rails db:seed
 Now lets visualize the api
 Start a server with rails s
 Go to http://localhost:3000/api/v1/feedbacks
+
+## Working with Vue.js for the front
+
+### Adding static page with Vue.js
+
+```
+# app/view/application.html.erb add
+<%= javascript_pack_tag 'hello_vue' %>
+
+# In the terminal open 2 windows and run below command
+# in one tab
+rails server
+
+# in another tab
+./bin/webpack-dev-server
+
+```
+
+### Connexion between API and front with AXIOS
+
+```
+# In your below structure
+/javacript
+    /packs
+				hello_vue.js
+				application.js
+		app.vue
+add a folder api and create a file client.js
+/javacript
+    /packs
+				  /api
+        client.js
+```
+In this client.js file we will add the connexion with the API
+```
+# In the app/javascript/packs/api/client.js add
+import axios from 'axios';
+
+const API_URL = 'http://localhost:3000'
+
+export const apiClient = axios.create({
+  // baseURL:          window.location.origin,
+  baseURL: API_URL,
+  headers:          {
+    Accept:         'application/json',
+    'Content-Type': 'application/json',
+    'X-CSRF-Token': document.getElementsByName("csrf-token")[0].getAttribute("content")
+  },
+  timeout:          30000
+});
+
+export const api = {
+  feedbacks() {
+    return apiClient.get(`/api/v1/feedbacks`);
+  }
+}
+```
+
+### Creating our first Vue.js component
+
+```
+# In your app.vue file
+<template>
+  <div id="app">
+    <div class="banner" style="background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url(https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/background.png);">
+      <h1>{{ message }}</h1>
+    </div>
+    <ul class="mt-4">
+      <li class="card-product" v-for="feedback in feedbacks" :key="feedback.id" :feedback="feedback">
+        <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/skateboard.jpg" />
+        <div class="card-product-infos">
+          <h2>{{ feedback.title }}</h2>
+          <p>{{ feedback.description }}</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+</template>
+
+<script>
+import { api } from './packs/api/client';
+export default {
+  data: function () {
+    return {
+      message: "Hello! Below you will find the feedbacks",
+      feedbacks: []
+    }
+  },
+  mounted() {
+    this.loadFeedback();
+  },
+  methods: {
+    loadFeedback() {
+      return api.feedbacks().then((response) => {
+        this.feedbacks = response.data;
+      });
+    }
+  }
+}
+</script>
+```
+
+Go to http://localhost:3000/api/v1/feedbacks
+You will see your feedbacks displayed!
+Now let's add some style
+
+
+```
+
+<style scoped>
+.banner {
+  background-size: cover;
+  background-position: center;
+  padding: 150px 0;
+}
+
+.banner h1 {
+  margin: 0;
+  color: white;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+  font-size: 32px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.card-product {
+  overflow: hidden;
+  height: 120px;
+  background: white;
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  display: flex;
+  align-items: center;
+  margin: 5px;
+}
+
+.card-product img {
+  height: 100%;
+  width: 120px;
+  object-fit: cover;
+}
+
+.card-product h2 {
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.card-product p {
+  font-size: 12px;
+  line-height: 1.4;
+  opacity: .7;
+  margin-bottom: 0;
+  margin-top: 8px;
+}
+
+.card-product .card-product-infos {
+  padding: 16px;
+}
+</style>
+```
+
+### Adding some tests 😇
+
+
