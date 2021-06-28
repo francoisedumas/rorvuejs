@@ -284,4 +284,43 @@ Now let's add some style
 
 ### Adding some tests 😇
 
+```
+# in the Gemfile
+group :development, :test do
+  gem 'rspec-rails'
+end
 
+# in the terminal
+bundle
+rails generate rspec:install
+```
+Ready! Let's test the feedback model
+```
+# In the terminal
+rails generate rspec:model feedback
+# in the file spec/models/feedback_spec.rb
+require 'rails_helper'
+
+RSpec.describe Feedback, type: :model do
+  subject(:my_feedback) {
+    Feedback.create(
+      title: "That's a title",
+      description: "And this is a description"
+    )
+  }
+
+  it 'is created' do
+    expect(my_feedback).to be_valid
+  end
+
+  it 'can be checked for object attribute and proper values' do
+    expect(my_feedback).to have_attributes(title: "That's a title", description: "And this is a description")
+  end
+end
+
+# in the terminal run
+rspec spec/models/feedback_spec.rb
+```
+
+Now lets test the API!!
+To come later 😂
