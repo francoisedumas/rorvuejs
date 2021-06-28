@@ -4,6 +4,8 @@ The target is to build a simple feedback application using
  - RoR as an API back end
  - Vue.js for the front end
 
+<img width="1262" alt="Screenshot_app_result" src="https://user-images.githubusercontent.com/33062224/123646517-93cde300-d827-11eb-9f45-accf7cfd5708.png">
+
 ## Starting with API back end
 
 ### Rails new
