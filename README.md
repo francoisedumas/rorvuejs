@@ -1,5 +1,6 @@
 # RoR / Vue.js Workshop
 ## Introduction to Vue.js using Ruby on Rails for the back
+
 The target is to build a simple feedback application using 
  - RoR as an API back end
  - Vue.js for the front end
@@ -9,6 +10,7 @@ The target is to build a simple feedback application using
 ## Starting with API back end
 
 ### Rails new
+
 Let's start by creating a new Rails app calling Vue.js with Webpack
 ```
 # In the terminal
@@ -21,6 +23,7 @@ git push origin master
 ```
 
 ### Creating the DB
+
 ```
 # In the terminal
 rails db:create
@@ -28,9 +31,10 @@ rails db:migrate RAILS_ENV=development
 ```
 
 ### Home page: route and controller
-In order to call our front with Vue.js we will create a home page
-```
-# In the terminal
+
+In order to call our front with Vue.js we will create a home page.
+Open your terminal and run
+```shell
 rails generate controller Home index
 
 # config/routes.rb replace GET home route by below one
@@ -41,33 +45,35 @@ root to: 'home#index'
 ```
 
 ### Generating the feedback model
+
 ```
-# In the terminal
 rails g model Feedback title:string description:text
 rails db:migrate
 rails g controller feedbacks
 ```
 
 ### API: routes & controllers
+
 Now we will create the structure of our app for the API
-```
+```ruby
 # in routes.rb
 namespace :api do
   namespace :v1 do      
     resources :feedbacks
   end
 end
-
-# build the next folder structure for controllers
+```
+build the next folder structure for controllers
 /controllers
     /api
         /v1
-# then move the feedback controller inside
-```
+then move the feedback controller inside the v1 folder
+
 
 ### Feedback controller
+
 In your Feedback controller file add
-```
+```ruby
 module Api
   module V1
     class FeedbacksController < ApplicationController
@@ -102,8 +108,9 @@ end
 ```
 
 ### Seeds
+
 Let's create some data with your seeds file
-```
+```ruby
 # Cleaning DB
 puts "Cleaning Database"
 Feedback.destroy_all
@@ -114,51 +121,46 @@ Feedback.create!(title: "My second feedback", description: "This second feedback
 Feedback.create!(title: "1 last thing", description: "More to come...")
 # Feedback created
 puts "Feedbacks created"
+```
 
-# In the terminal
+In the terminal
+```
 rails db:seed
 ```
 
 ### Accessing the API
+
 Now lets visualize the api
 Start a server with rails s
 Go to http://localhost:3000/api/v1/feedbacks
+<img width="582" alt="Screenshot_api_output" src="https://user-images.githubusercontent.com/33062224/123652336-7fd8b000-d82c-11eb-8d62-8542ec4ab62c.png">
 
 ## Working with Vue.js for the front
 
 ### Adding static page with Vue.js
 
-```
+```ruby
 # app/view/application.html.erb add
 <%= javascript_pack_tag 'hello_vue' %>
-
-# In the terminal open 2 windows and run below command
-# in one tab
-rails server
-
-# in another tab
-./bin/webpack-dev-server
-
 ```
+In the terminal open 2 windows and run below command
+ - in one tab `rails server`
+ - in another tab `./bin/webpack-dev-server`
 
 ### Connexion between API and front with AXIOS
 
+In your below structure add a folder api and create a file client.js
 ```
-# In your below structure
 /javacript
     /packs
-				hello_vue.js
-				application.js
-		app.vue
-add a folder api and create a file client.js
-/javacript
-    /packs
-				  /api
-        client.js
+	hello_vue.js
+	application.js
+	**/api**
+           **client.js**
+     app.vue
 ```
 In this client.js file we will add the connexion with the API
-```
-# In the app/javascript/packs/api/client.js add
+```ruby
 import axios from 'axios';
 
 const API_URL = 'http://localhost:3000'
@@ -183,8 +185,8 @@ export const api = {
 
 ### Creating our first Vue.js component
 
-```
-# In your app.vue file
+In your app.vue file
+```javascript
 <template>
   <div id="app">
     <div class="banner" style="background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url(https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/background.png);">
@@ -230,8 +232,7 @@ You will see your feedbacks displayed!
 Now let's add some style
 
 
-```
-
+```scss
 <style scoped>
 .banner {
   background-size: cover;
@@ -286,21 +287,23 @@ Now let's add some style
 
 ### Adding some tests 😇
 
+Go in your Gemfil
 ```
-# in the Gemfile
 group :development, :test do
   gem 'rspec-rails'
 end
-
-# in the terminal
+```
+In the terminal
+```
 bundle
 rails generate rspec:install
 ```
-Ready! Let's test the feedback model
-```
-# In the terminal
+Ready! Let's test the feedback model. In the terminal
+```shell
 rails generate rspec:model feedback
-# in the file spec/models/feedback_spec.rb
+```
+Go to your file spec/models/feedback_spec.rb
+```ruby
 require 'rails_helper'
 
 RSpec.describe Feedback, type: :model do
@@ -319,8 +322,9 @@ RSpec.describe Feedback, type: :model do
     expect(my_feedback).to have_attributes(title: "That's a title", description: "And this is a description")
   end
 end
-
-# in the terminal run
+```
+In the terminal run
+```shell
 rspec spec/models/feedback_spec.rb
 ```
 
