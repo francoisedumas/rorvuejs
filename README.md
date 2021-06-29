@@ -12,8 +12,8 @@ The target is to build a simple feedback application using
 ### Rails new
 
 Let's start by creating a new Rails app calling Vue.js with Webpack
+In the terminal
 ```
-# In the terminal
 rails new rorvuejs --webpack=vue --database=postgresql
 
 cd rorvuejs
@@ -24,8 +24,8 @@ git push origin master
 
 ### Creating the DB
 
+In the terminal
 ```
-# In the terminal
 rails db:create
 rails db:migrate RAILS_ENV=development
 ```
@@ -54,19 +54,21 @@ rails g controller feedbacks
 
 ### API: routes & controllers
 
-Now we will create the structure of our app for the API
+Now we will create the structure of our app for the API.
+Go to the file routes.rb and create the below routes
 ```ruby
-# in routes.rb
 namespace :api do
   namespace :v1 do      
     resources :feedbacks
   end
 end
 ```
-build the next folder structure for controllers
+build the next folder structure in your app/controllers folder
+```
 /controllers
     /api
         /v1
+```
 then move the feedback controller inside the v1 folder
 
 
@@ -139,8 +141,8 @@ Go to http://localhost:3000/api/v1/feedbacks
 
 ### Adding static page with Vue.js
 
+In your file app/view/application.html.erb add
 ```ruby
-# app/view/application.html.erb add
 <%= javascript_pack_tag 'hello_vue' %>
 ```
 In the terminal open 2 windows and run below command
@@ -149,14 +151,14 @@ In the terminal open 2 windows and run below command
 
 ### Connexion between API and front with AXIOS
 
-In your below structure add a folder api and create a file client.js
+build the next folder structure in app/javascript/packs adding an api folder and create a file client.js
 ```
 /javacript
     /packs
 	hello_vue.js
 	application.js
-	**/api**
-           **client.js**
+	/api
+           client.js
      app.vue
 ```
 In this client.js file we will add the connexion with the API
@@ -185,13 +187,46 @@ export const api = {
 
 ### Creating our first Vue.js component
 
-In your app.vue file
+build the next folder structure in app/javascript adding a components folder and create a file FeedbackList.js
+```shell
+/javacript
+    /packs
+    /components
+    	FeedbackList.js
+    app.vue
+```
+
+In your __**app.vue**__ file we will root our futur components
 ```javascript
 <template>
   <div id="app">
     <div class="banner" style="background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url(https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/background.png);">
       <h1>{{ message }}</h1>
     </div>
+    <FeedbacksList />
+  </div>
+</template>
+
+<script>
+import FeedbacksList from './components/FeedbacksList.vue'
+
+export default {
+  data: function () {
+    return {
+      message: "Hello! Below you will find the feedbacks"
+    }
+  },
+  components: {
+    FeedbacksList
+  }
+}
+</script>
+```
+
+In your below __**FeedbackList.js**__ file add the following code
+```javascript
+<template>
+  <div>
     <ul class="mt-4">
       <li class="card-product" v-for="feedback in feedbacks" :key="feedback.id" :feedback="feedback">
         <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/skateboard.jpg" />
@@ -205,11 +240,11 @@ In your app.vue file
 </template>
 
 <script>
-import { api } from './packs/api/client';
+import { api } from '../packs/api/client';
+
 export default {
-  data: function () {
+  data() {
     return {
-      message: "Hello! Below you will find the feedbacks",
       feedbacks: []
     }
   },
@@ -222,16 +257,17 @@ export default {
         this.feedbacks = response.data;
       });
     }
-  }
+  },
 }
 </script>
 ```
 
-Go to http://localhost:3000/api/v1/feedbacks
+Go to http://localhost:3000
 You will see your feedbacks displayed!
-Now let's add some style
 
+Now let's add some style!
 
+In your __**app.vue**__ file add this scss below the script
 ```scss
 <style scoped>
 .banner {
@@ -248,7 +284,10 @@ Now let's add some style
   font-weight: bold;
   text-align: center;
 }
+```
 
+In your __**FeedbackList.js**__ file add this scss below the script
+```scss
 .card-product {
   overflow: hidden;
   height: 120px;
