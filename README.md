@@ -187,17 +187,17 @@ export const api = {
 
 ### Creating our first Vue.js component
 
-build the next folder structure in app/javascript adding a components folder and create a file FeedbackList.js
+build the next folder structure in app/javascript adding a components folder and create a file FeedbackList.vue
 ```shell
 /javacript
     /packs
     /components
-    	FeedbackList.js
+    	FeedbackList.vue
     app.vue
 ```
 
 In your __**app.vue**__ file we will root our futur components
-```javascript
+```vue
 <template>
   <div id="app">
     <div class="banner" style="background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url(https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/background.png);">
@@ -223,8 +223,8 @@ export default {
 </script>
 ```
 
-In your below __**FeedbackList.js**__ file add the following code
-```javascript
+In your below __**FeedbackList.vue**__ file add the following code
+```vue
 <template>
   <div>
     <ul class="mt-4">
