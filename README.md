@@ -268,7 +268,7 @@ You will see your feedbacks displayed!
 Now let's add some style!
 
 In your __**app.vue**__ file add this scss below the script
-```scss
+```vue
 <style scoped>
 .banner {
   background-size: cover;
@@ -284,10 +284,12 @@ In your __**app.vue**__ file add this scss below the script
   font-weight: bold;
   text-align: center;
 }
+</style>
 ```
 
 In your __**FeedbackList.js**__ file add this scss below the script
-```scss
+```vue
+<style scoped>
 .card-product {
   overflow: hidden;
   height: 120px;
