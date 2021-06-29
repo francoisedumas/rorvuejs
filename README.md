@@ -187,12 +187,12 @@ export const api = {
 
 ### Creating our first Vue.js component
 
-build the next folder structure in app/javascript adding a components folder and create a file FeedbackList.vue
+build the next folder structure in app/javascript adding a components folder and create a file FeedbacksList.vue
 ```shell
 /javacript
     /packs
     /components
-    	FeedbackList.vue
+    	FeedbacksList.vue
     app.vue
 ```
 
@@ -223,7 +223,7 @@ export default {
 </script>
 ```
 
-In your below __**FeedbackList.vue**__ file add the following code
+In your below __**FeedbacksList.vue**__ file add the following code
 ```vue
 <template>
   <div>
@@ -328,7 +328,7 @@ In your __**FeedbackList.js**__ file add this scss below the script
 
 ### Adding some tests 😇
 
-Go in your Gemfil
+Go to your Gemfil and add below gem
 ```
 group :development, :test do
   gem 'rspec-rails'
@@ -370,4 +370,70 @@ rspec spec/models/feedback_spec.rb
 ```
 
 Now lets test the API!!
-To come later 😂
+build the next folder structure in spec the folders controllers/api/v1 and create a file feedbacks_controller_spec.rb
+```shell
+/spec
+    /controllers
+        /api
+	    /v1
+	    	feedbacks_controller_spec.rb
+```
+In your file feedbacks_controller_spec.rb
+```ruby
+module Api
+  module V1
+    class FeedbacksController < ApplicationController
+
+      # GET /feedbacks
+      def index
+        @feedbacks = Feedback.all
+
+        render json: @feedbacks
+      end
+
+      # POST /feedbacks
+      def create
+        @feedback = Feedback.new(feedback_params)
+
+        if @feedback.save
+          render json: @feedback, status: :created
+        else
+          render json: @feedback.errors, status: :unprocessable_entity
+        end
+      end
+
+      private
+
+      # Only allow a trusted parameter "white list" through.
+      def feedback_params
+        params.require(:feedback).permit(:title, :description)
+      end
+    end
+  end
+end
+```
+In the terminal run
+```shell
+rspec spec/models/feedbacks_controller_spec.rb
+```
+
+### Bonus: test coverage
+Go to your Gemfil add simpleCov gem
+```
+group :development, :test do
+   ...
+   gem 'simplecov', require: false
+end
+```
+In your spec/spec_helper.rb file add at the beginning
+```ruby
+require 'simplecov'
+SimpleCov.start 'rails'
+```
+In the terminal run
+```shell
+bundle exec rspec 
+```
+Now you have the total test coverage of your app!
+Enjoy
+
