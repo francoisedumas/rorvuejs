@@ -30,20 +30,6 @@ rails db:create
 rails db:migrate RAILS_ENV=development
 ```
 
-### Home page: route and controller
-
-In order to call our front with Vue.js we will create a home page.
-Open your terminal and run
-```shell
-rails generate controller Home index
-
-# config/routes.rb replace GET home route by below one
-root to: 'home#index'
-
-# in app/views/home/index.html replace all by
-<div id='app'></div>
-```
-
 ### Generating the feedback model
 
 ```
@@ -141,9 +127,21 @@ Go to http://localhost:3000/api/v1/feedbacks
 
 ### Adding static page with Vue.js
 
-In your file app/view/application.html.erb add
+In your file app/view/application.html.erb add 
+ - in the `<head>`
 ```ruby
 <%= javascript_pack_tag 'hello_vue' %>
+```
+ - in the `<body>` below the `<%= yield %>`
+```ruby
+<div id='vue-app'></div>
+```
+In your file app/javascript/pack/hello_vue.js change `document.body.appendChild(app.$el)` by
+```javascript
+const parentElement = document.getElementById("vue-app")
+if (parentElement) {
+   parentElement.appendChild(app.$el)
+}
 ```
 In the terminal open 2 windows and run below command
  - in one tab `rails server`
@@ -437,3 +435,8 @@ bundle exec rspec
 Now you have the total test coverage of your app!
 Enjoy
 
+## Going further
+
+In order to keep developping this RoR / Vue.js app without making the Readme unreadable the next improvement are kept into branches
+ - add-feedback branch show how to add a form for user to add feedback
+ - scss-ui show how to move style away from `<scope>` in the Vue.js components
