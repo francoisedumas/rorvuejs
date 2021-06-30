@@ -179,7 +179,7 @@ export const apiClient = axios.create({
 });
 
 export const api = {
-  feedbacks() {
+  getFeedbacks() {
     return apiClient.get(`/api/v1/feedbacks`);
   }
 }
@@ -253,7 +253,7 @@ export default {
   },
   methods: {
     loadFeedback() {
-      return api.feedbacks().then((response) => {
+      return api.getFeedbacks().then((response) => {
         this.feedbacks = response.data;
       });
     }
