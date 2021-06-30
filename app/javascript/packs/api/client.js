@@ -14,7 +14,10 @@ export const apiClient = axios.create({
 });
 
 export const api = {
-  feedbacks() {
+  getFeedbacks() {
     return apiClient.get(`/api/v1/feedbacks`);
-  }
+  },
+  postFeedbacks(title, description) {
+    return apiClient.post(`/api/v1/feedbacks`, { feedback: { title: title, description: description }});
+  },
 }
