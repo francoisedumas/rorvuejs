@@ -27,6 +27,12 @@
           <h2>{{ feedback.title }}</h2>
           <p>{{ feedback.description }}</p>
         </div>
+        <Rating
+          :grade="feedback.rating"
+          :maxStars="5"
+          :hasCounter="true"
+          @update-star="updateStar(feedback.id, $event)"
+        />
         <button class="vhs-validation" @click="deleteFeedback(feedback.id)">
           {{ "Delete" }}
         </button>
@@ -37,6 +43,7 @@
 
 <script>
 import { api } from '../packs/api/client';
+import Rating from './Rating.vue'
 
 export default {
   data() {
@@ -46,6 +53,9 @@ export default {
       newDescription: "",
       newTitle: "",
     }
+  },
+  components: {
+    Rating
   },
   mounted() {
     this.loadFeedback();
@@ -73,7 +83,13 @@ export default {
         let index = this.feedbacks.findIndex( el => el.id === id );
         this.$delete(this.feedbacks, index)
       });
-    }
+    },
+    updateStar(id, star) {
+      return api.updateFeedbacks(id, star).then((response) => {
+        const feedback = this.feedbacks.find( f => f.id === id );
+        feedback.rating = response.data.rating;
+      });
+    },
   },
 }
 </script>
