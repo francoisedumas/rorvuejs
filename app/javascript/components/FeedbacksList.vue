@@ -27,6 +27,9 @@
           <h2>{{ feedback.title }}</h2>
           <p>{{ feedback.description }}</p>
         </div>
+        <button class="vhs-validation" @click="deleteFeedback(feedback.id)">
+          {{ "Delete" }}
+        </button>
       </li>
     </ul>
   </div>
@@ -64,6 +67,12 @@ export default {
         this.newTitle = ""
         this.newDescription = ""
       })
+    },
+    deleteFeedback(id) {
+      return api.destroyFeedback(id).then((_response) => {
+        let index = this.feedbacks.findIndex( el => el.id === id );
+        this.$delete(this.feedbacks, index)
+      });
     }
   },
 }
