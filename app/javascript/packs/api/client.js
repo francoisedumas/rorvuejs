@@ -20,4 +20,7 @@ export const api = {
   postFeedbacks(title, description) {
     return apiClient.post(`/api/v1/feedbacks`, { feedback: { title: title, description: description }});
   },
+  destroyFeedback(id) {
+    return apiClient.delete (`/api/v1/feedbacks/${id}`);
+  }
 }

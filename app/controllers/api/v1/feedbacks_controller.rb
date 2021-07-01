@@ -1,6 +1,7 @@
 module Api
   module V1
     class FeedbacksController < ApplicationController
+      before_action :set_feedback, only: [:destroy]
 
       # GET /feedbacks
       def index
@@ -20,7 +21,17 @@ module Api
         end
       end
 
+      # DELETE /feedbacks/1
+      def destroy
+        @feedback.destroy
+      end
+
       private
+
+      # Use callbacks to share common setup or constraints between actions.
+      def set_feedback
+        @feedback = Feedback.find(params[:id])
+      end
 
       # Only allow a trusted parameter "white list" through.
       def feedback_params
