@@ -1,7 +1,7 @@
 # RoR / Vue.js Workshop
 ## Introduction to Vue.js using Ruby on Rails for the back
 
-The target is to build a simple feedback application using 
+The target is to build a simple feedback application using
  - RoR as an API back end
  - Vue.js for the front end
 
@@ -58,7 +58,7 @@ Now we will create the structure of our app for the API.
 Go to the file routes.rb and create the below routes
 ```ruby
 namespace :api do
-  namespace :v1 do      
+  namespace :v1 do
     resources :feedbacks
   end
 end
@@ -97,7 +97,7 @@ module Api
           render json: @feedback.errors, status: :unprocessable_entity
         end
       end
-      
+
       private
 
       # Only allow a trusted parameter "white list" through.
@@ -432,8 +432,7 @@ SimpleCov.start 'rails'
 ```
 In the terminal run
 ```shell
-bundle exec rspec 
+bundle exec rspec
 ```
 Now you have the total test coverage of your app!
 Enjoy
-
