@@ -1,0 +1,19 @@
+
+.vhs-button {
+  color: rgb(237, 236, 224);
+  font-family: "courier", monospace;
+  letter-spacing: 2px;
+  padding: 10px 30px;
+  background-color: $black;
+  border: 1px solid rgb(237, 236, 224);
+  text-decoration: none;
+  margin: 5px 0 5px 0;
+}
+
+.vhs-button:hover {
+  color: $black;
+  background-color: rgb(237, 236, 224);
+  transition-duration: 1s;
+  text-decoration: none;
+  transform: scale(1.06);
+}

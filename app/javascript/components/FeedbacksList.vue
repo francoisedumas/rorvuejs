@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div>
-      <button class="btn btn-ghost" @click="newFeedbackVisible = !newFeedbackVisible">
+      <button class="btn vhs-button" @click="newFeedbackVisible = !newFeedbackVisible">
         {{ newFeedbackVisible ? "✕" : "＋" }}
       </button>
       <div
@@ -20,10 +20,10 @@
         ></textarea>
       </div>
     </div>
-    <ul class="mt-4">
-      <li class="card-product" v-for="feedback in feedbacks" :key="feedback.id" :feedback="feedback">
+    <ul class="border-test">
+      <li class="vhs-show-card" v-for="feedback in feedbacks" :key="feedback.id" :feedback="feedback">
         <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/skateboard.jpg" />
-        <div class="card-product-infos">
+        <div>
           <h2>{{ feedback.title }}</h2>
           <p>{{ feedback.description }}</p>
         </div>
@@ -68,8 +68,3 @@ export default {
   },
 }
 </script>
-
-
-<style scoped>
-
-</style>
