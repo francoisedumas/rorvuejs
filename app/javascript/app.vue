@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div class="banner" style="background-image: linear-gradient(rgba(0,0,0,0.2),rgba(0,0,0,0.2)), url(https://images3.alphacoders.com/827/827917.jpg);">
+    <div class="banner" style="background-image: linear-gradient(rgba(0,0,0,0.2),rgba(0,0,0,0.2)), url(https://source.unsplash.com/random);">
       <h1><span class="vhs-title" id="vhs-title"></span></h1>
     </div>
     <FeedbacksList />

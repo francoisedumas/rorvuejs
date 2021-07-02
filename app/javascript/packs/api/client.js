@@ -22,5 +22,8 @@ export const api = {
   },
   destroyFeedback(id) {
     return apiClient.delete (`/api/v1/feedbacks/${id}`);
-  }
+  },
+  updateFeedbacks(id, rating) {
+    return apiClient.patch (`/api/v1/feedbacks/${id}`, { feedback: { rating: rating }});
+  },
 }

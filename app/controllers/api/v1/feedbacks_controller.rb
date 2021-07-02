@@ -1,7 +1,7 @@
 module Api
   module V1
     class FeedbacksController < ApplicationController
-      before_action :set_feedback, only: [:destroy]
+      before_action :set_feedback, only: [:update, :destroy]
 
       # GET /feedbacks
       def index
@@ -26,6 +26,15 @@ module Api
         @feedback.destroy
       end
 
+      # PATCH/PUT /feedbacks/1
+      def update
+        if @feedback.update(feedback_params)
+          render json: @feedback
+        else
+          render json: @feedback.errors, status: :unprocessable_entity
+        end
+      end
+
       private
 
       # Use callbacks to share common setup or constraints between actions.
@@ -35,7 +44,7 @@ module Api
 
       # Only allow a trusted parameter "white list" through.
       def feedback_params
-        params.require(:feedback).permit(:title, :description)
+        params.require(:feedback).permit(:title, :description, :rating)
       end
     end
   end
