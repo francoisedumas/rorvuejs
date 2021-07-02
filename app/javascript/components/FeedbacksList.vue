@@ -20,25 +20,28 @@
         ></textarea>
       </div>
     </div>
-    <ul class="border-test">
-      <li class="vhs-show-card" v-for="feedback in feedbacks" :key="feedback.id" :feedback="feedback">
-        <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/skateboard.jpg" />
-        <div>
-          <h2>{{ feedback.title }}</h2>
-          <p>{{ feedback.description }}</p>
-        </div>
-        <Rating
-          :grade="feedback.rating"
-          :maxStars="5"
-          :hasCounter="true"
-          @update-star="updateStar(feedback.id, $event)"
-          :key="componentKey"
-        />
-        <button class="vhs-validation" @click="deleteFeedback(feedback.id)">
-          {{ "Delete" }}
-        </button>
-      </li>
-    </ul>
+    <div v-if="feedbacks.length > 0">
+      <ul>
+        <li class="vhs-show-card" v-for="feedback in feedbacks" :key="feedback.id" :feedback="feedback">
+          <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/skateboard.jpg" />
+          <div>
+            <h2>{{ feedback.title }}</h2>
+            <p>{{ feedback.description }}</p>
+          </div>
+          <Rating
+            :grade="feedback.rating"
+            :maxStars="5"
+            :hasCounter="true"
+            @update-star="updateStar(feedback.id, $event)"
+            :key="componentKey"
+          />
+          <button class="vhs-validation" @click="deleteFeedback(feedback.id)">
+            {{ "Delete" }}
+          </button>
+        </li>
+      </ul>
+    </div>
+    <p v-else>No feedback yet! Post one by clicking on the + 👆</p>
   </div>
 </template>
 
@@ -92,7 +95,7 @@ export default {
         feedback.rating = response.data.rating;
         this.componentKey += 1;
       });
-    },
+    }
   },
 }
 </script>
