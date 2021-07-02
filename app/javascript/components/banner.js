@@ -2,7 +2,7 @@ import Typed from 'typed.js';
 
 const loadDynamicBannerText = () => {
   new Typed('#vhs-title', {
-    strings: ["FIND MOVIES' FEEDBACK", "AND POST YOURS..."],
+    strings: ["FIND FEEDBACKS YOU LOVE", "AND POST YOURS..."],
     typeSpeed: 80,
     loop: true
   });

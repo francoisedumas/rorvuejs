@@ -32,6 +32,7 @@
           :maxStars="5"
           :hasCounter="true"
           @update-star="updateStar(feedback.id, $event)"
+          :key="componentKey"
         />
         <button class="vhs-validation" @click="deleteFeedback(feedback.id)">
           {{ "Delete" }}
@@ -52,6 +53,7 @@ export default {
       newFeedbackVisible: false,
       newDescription: "",
       newTitle: "",
+      componentKey: 0,
     }
   },
   components: {
@@ -80,7 +82,7 @@ export default {
     },
     deleteFeedback(id) {
       return api.destroyFeedback(id).then((_response) => {
-        let index = this.feedbacks.findIndex( el => el.id === id );
+        let index = this.feedbacks.findIndex( f => f.id === id );
         this.$delete(this.feedbacks, index)
       });
     },
@@ -88,6 +90,7 @@ export default {
       return api.updateFeedbacks(id, star).then((response) => {
         const feedback = this.feedbacks.find( f => f.id === id );
         feedback.rating = response.data.rating;
+        this.componentKey += 1;
       });
     },
   },

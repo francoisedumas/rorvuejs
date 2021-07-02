@@ -2,7 +2,7 @@
   <div class="rating">
     <ul class="list">
       <li @click="rate(star), submitStar(star)" v-for="star in maxStars" :class="{ 'active': star <= stars }" :key="star.stars" class="star">
-      <i :class="star <= stars ? 'fas fa-star' : 'far fa-star'"></i>
+        <i :class="star <= stars ? 'fas fa-star' : 'far fa-star'"></i>
       </li>
     </ul>
     <div v-if="hasCounter" class="info counter">
