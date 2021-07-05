@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Api::V1::FeedbacksController do
-  let!(:first_feedback)  { Feedback.create(:title => "Test Title", :description => "Test Description")}
 
   describe "GET #index" do
     before do
@@ -18,12 +17,42 @@ RSpec.describe Api::V1::FeedbacksController do
     end
   end
 
-  # describe "POST #create" do
-  #   let!(:params) { {feedback: { title: "Post title", description: "Post description" } } }
+  describe "POST #create" do
+    let!(:params) { {feedback: { title: "Feedback title", description: "Feedback description", rating: 4} } }
 
-  #   it "receives info data and creates a new feedback" do
-  #     post :create, params: params
-  #     expect(post :create, params: params).to change(Feedback, :count).by(1)
-  #   end
-  # end
+    before do
+      post :create, params: params
+    end
+
+    it "returns http success" do
+      expect(response).to have_http_status(:success)
+    end
+
+    it "receives info data and creates the new feedback" do
+      expect(Feedback.last).to have_attributes params[:feedback]
+    end
+
+    # it "adds a new feedback" do
+    #   expect(post :create, params: params).to change(Feedback, :count).by(1)
+    # end
+  end
+
+  describe "DELETE #destroy" do
+
+    before do
+      feedback_to_destroy = Feedback.create(title: "Feedback to destroy", description: "Feedback to destroy", rating: 4)
+      @total_feedback = Feedback.count
+      delete :destroy, params: { id: feedback_to_destroy.id }
+    end
+
+    it "returns http success" do
+      expect(response).to have_http_status(:success)
+    end
+
+    it "removes the last feedback created" do
+      # should be done with .to change but...
+      new_total_feedback = Feedback.count
+      expect(@total_feedback).not_to eq(new_total_feedback)
+    end
+  end
 end
