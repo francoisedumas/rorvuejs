@@ -21,25 +21,27 @@
       </div>
     </div>
     <div v-if="feedbacks.length > 0">
-      <ul>
-        <li class="vhs-show-card" v-for="feedback in feedbacks" :key="feedback.id" :feedback="feedback">
-          <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/skateboard.jpg" />
-          <div>
-            <h2>{{ feedback.title }}</h2>
-            <p>{{ feedback.description }}</p>
-          </div>
-          <Rating
-            :grade="feedback.rating"
-            :maxStars="5"
-            :hasCounter="true"
-            @update-star="updateStar(feedback.id, $event)"
-            :key="componentKey"
-          />
-          <button class="vhs-validation" @click="deleteFeedback(feedback.id)">
-            {{ "Delete" }}
-          </button>
-        </li>
-      </ul>
+        <ul>
+          <draggable class="list-group" :list="feedbacks" group="comments" ghost-class="ghost">
+            <li class="vhs-show-card list-group-item" v-for="feedback in feedbacks" :key="feedback.id" :feedback="feedback">
+              <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/skateboard.jpg" />
+              <div>
+                <h2>{{ feedback.title }}</h2>
+                <p>{{ feedback.description }}</p>
+              </div>
+              <Rating
+                :grade="feedback.rating"
+                :maxStars="5"
+                :hasCounter="true"
+                @update-star="updateStar(feedback.id, $event)"
+                :key="componentKey"
+              />
+              <button class="vhs-validation" @click="deleteFeedback(feedback.id)">
+                {{ "Delete" }}
+              </button>
+            </li>
+          </draggable>
+        </ul>
     </div>
     <p v-else>No feedback yet! Post one by clicking on the + 👆</p>
   </div>
@@ -48,6 +50,7 @@
 <script>
 import { api } from '../packs/api/client';
 import Rating from './Rating.vue'
+import draggable from 'vuedraggable'
 
 export default {
   data() {
@@ -60,6 +63,7 @@ export default {
     }
   },
   components: {
+    draggable,
     Rating
   },
   mounted() {
