@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Api::V1::FeedbacksController do
-
   describe "GET #index" do
     before do
       get :index
@@ -18,7 +17,7 @@ RSpec.describe Api::V1::FeedbacksController do
   end
 
   describe "POST #create" do
-    let!(:params) { {feedback: { title: "Feedback title", description: "Feedback description", rating: 4} } }
+    let!(:params) { { feedback: { title: "Feedback title", description: "Feedback description", rating: 4 } } }
 
     before do
       post :create, params: params
@@ -38,7 +37,6 @@ RSpec.describe Api::V1::FeedbacksController do
   end
 
   describe "DELETE #destroy" do
-
     before do
       feedback_to_destroy = Feedback.create(title: "Feedback to destroy", description: "Feedback to destroy", rating: 4)
       @total_feedback = Feedback.count
@@ -57,10 +55,9 @@ RSpec.describe Api::V1::FeedbacksController do
   end
 
   describe "PATCH #update" do
-
     before do
       feedback_to_update = Feedback.create(title: "Feedback to update", description: "Feedback to update", rating: 4)
-      patch :update, params: { id: feedback_to_update.id, feedback: {rating: 1 } }
+      patch :update, params: { id: feedback_to_update.id, feedback: { rating: 1 } }
     end
 
     it "returns http success" do

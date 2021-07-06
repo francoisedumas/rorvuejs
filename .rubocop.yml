@@ -8,6 +8,7 @@ AllCops:
     - "support/**/*"
     - "tmp/**/*"
     - "test/**/*"
+    - "spec/spec_helper.rb"
 
 
 
