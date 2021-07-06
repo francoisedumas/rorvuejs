@@ -55,4 +55,21 @@ RSpec.describe Api::V1::FeedbacksController do
       expect(@total_feedback).not_to eq(new_total_feedback)
     end
   end
+
+  describe "PATCH #update" do
+
+    before do
+      feedback_to_update = Feedback.create(title: "Feedback to update", description: "Feedback to update", rating: 4)
+      patch :update, params: { id: feedback_to_update.id, feedback: {rating: 1 } }
+    end
+
+    it "returns http success" do
+      expect(response).to have_http_status(:success)
+    end
+
+    it "updates the last feedback rating" do
+      new_rating = Feedback.last.rating
+      expect(new_rating).to eq(1)
+    end
+  end
 end
